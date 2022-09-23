@@ -13,6 +13,8 @@ function getComputerChoice(){
 
 // 2. Function that plays a single round
 
+/*
+
 function playRound(playerSelection, computerSelection) {
     // Rock wins Scissors - Paper wins Rock - Scissors wins Paper - Tie
     if (playerSelection === "Rock" && computerSelection == "Scissors") {
@@ -28,9 +30,21 @@ function playRound(playerSelection, computerSelection) {
     }
   }
    
-  const playerSelection = "Rock";
-  const computerSelection = getComputerChoice();
 
-  console.log(`Player selection was: ${playerSelection}`);
-  console.log(`Computer selection was: ${computerSelection}`);
-  playRound(playerSelection, computerSelection);
+*/
+
+// 2.1 Function expression
+
+let playRound = (playerSelection, computerSelection) => 
+    (playerSelection == "Rock" && computerSelection == "Scissors") ? console.log("You win!")
+    : (playerSelection == "Paper" && computerSelection == "Rock") ? console.log("You win!")
+    : (playerSelection == "Scissors" && computerSelection == "Paper") ? console.log("You win!")
+    : (playerSelection == computerSelection) ? console.log("Tie!")
+    : console.log("You lose!");
+   
+const playerSelection = "Rock";
+const computerSelection = getComputerChoice();
+
+console.log(`Player selection was: ${playerSelection}`);
+console.log(`Computer selection was: ${computerSelection}`);
+playRound(playerSelection, computerSelection);
