@@ -1,11 +1,10 @@
 // 1. Function that will randomly return either "Rock", "Paper" or "Scissors".
 
-let options = ["Rock", "Paper", "Scissors"];
-let optionsLength = options.length;
-
-let randomIndex = () => Math.floor(Math.random() * optionsLength);
-
 function getComputerChoice(){
+    let options = ["Rock", "Paper", "Scissors"];
+    let optionsLength = options.length;
+    let randomIndex = () => Math.floor(Math.random() * optionsLength);
+
     return computerChoice = options[randomIndex()];
 }
 
@@ -18,15 +17,15 @@ function getComputerChoice(){
 function playRound(playerSelection, computerSelection) {
     // Rock wins Scissors - Paper wins Rock - Scissors wins Paper - Tie
     if (playerSelection === "Rock" && computerSelection == "Scissors") {
-        console.log("You win!");
+        return "You win!";
     } else if (playerSelection == "Paper" && computerSelection == "Rock") {
-        console.log("You win!");
+        return "You win!";
     } else if (playerSelection == "Scissors" && computerSelection == "Paper"){
-        console.log("You win!");
+        return "You win!";
     } else if (playerSelection == computerSelection) {
-        console.log("Tie!");
+        return "Tie!";
     }   else {
-        console.log("You lose!");
+        return "You lose!";
     }
   }
    
@@ -34,17 +33,16 @@ function playRound(playerSelection, computerSelection) {
 */
 
 // 2.1 Function expression
-
 let playRound = (playerSelection, computerSelection) => 
-    (playerSelection == "Rock" && computerSelection == "Scissors") ? console.log("You win!")
-    : (playerSelection == "Paper" && computerSelection == "Rock") ? console.log("You win!")
-    : (playerSelection == "Scissors" && computerSelection == "Paper") ? console.log("You win!")
-    : (playerSelection == computerSelection) ? console.log("Tie!")
-    : console.log("You lose!");
+    (playerSelection == "Rock" && computerSelection == "Scissors") ? "You win!"
+    : (playerSelection == "Paper" && computerSelection == "Rock") ? "You win!"
+    : (playerSelection == "Scissors" && computerSelection == "Paper") ? "You win!"
+    : (playerSelection == computerSelection) ? "Tie!"
+    : "You lose!";
    
 const playerSelection = "Rock";
 const computerSelection = getComputerChoice();
 
 console.log(`Player selection was: ${playerSelection}`);
 console.log(`Computer selection was: ${computerSelection}`);
-playRound(playerSelection, computerSelection);
+console.log(playRound(playerSelection, computerSelection));
