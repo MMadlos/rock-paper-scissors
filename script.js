@@ -1,48 +1,62 @@
-// 1. Function that will randomly return either "Rock", "Paper" or "Scissors".
+// The computer selects randomly: rock, paper o scissors.
+
+let options = ["Rock", "Paper", "Scissors"];
 
 function getComputerChoice(){
-    let options = ["Rock", "Paper", "Scissors"];
     let optionsLength = options.length;
     let randomIndex = () => Math.floor(Math.random() * optionsLength);
 
     return computerChoice = options[randomIndex()];
 }
 
- // It works! console.log(getComputerChoice());
+let playerScore = 0;
+let computerScore = 0;
+const messageWin = "You win!";
+const messageTie = "Tie!";
+const messageLose = "You lose!";
 
-// 2. Function that plays a single round
+function game(){
 
-/*
+    // Indica resultado de la partida y suma los puntos
+    function playRound(playerSelection, computerSelection) {
+        if (playerSelection == "Rock" && computerSelection == "Scissors") {
+            playerScore++;
+            return `${messageWin} Your score is ${playerScore}`;
 
-function playRound(playerSelection, computerSelection) {
-    // Rock wins Scissors - Paper wins Rock - Scissors wins Paper - Tie
-    if (playerSelection === "Rock" && computerSelection == "Scissors") {
-        return "You win!";
-    } else if (playerSelection == "Paper" && computerSelection == "Rock") {
-        return "You win!";
-    } else if (playerSelection == "Scissors" && computerSelection == "Paper"){
-        return "You win!";
-    } else if (playerSelection == computerSelection) {
-        return "Tie!";
-    }   else {
-        return "You lose!";
-    }
-  }
-   
+        } else if (playerSelection == "Paper" && computerSelection == "Rock") {
+            playerScore++;
+            return `${messageWin} Your score is ${playerScore}`;
 
-*/
+        } else if (playerSelection == "Scissors" && computerSelection == "Paper"){
+            playerScore++;
+            return `${messageWin} Your score is ${playerScore}`;
 
-// 2.1 Function expression
-let playRound = (playerSelection, computerSelection) => 
-    (playerSelection == "Rock" && computerSelection == "Scissors") ? "You win!"
-    : (playerSelection == "Paper" && computerSelection == "Rock") ? "You win!"
-    : (playerSelection == "Scissors" && computerSelection == "Paper") ? "You win!"
-    : (playerSelection == computerSelection) ? "Tie!"
-    : "You lose!";
-   
-const playerSelection = "Rock";
-const computerSelection = getComputerChoice();
+        } else if (playerSelection == computerSelection) {
+            return `${messageTie} Your score is ${playerScore}`;
 
-console.log(`Player selection was: ${playerSelection}`);
-console.log(`Computer selection was: ${computerSelection}`);
-console.log(playRound(playerSelection, computerSelection));
+        }   else {
+            computerScore++;
+            return `${messageLose} Your score is ${playerScore}`;
+        }
+      }
+
+    // Genera 5 partidas
+    for (let i = 0; i < 5; i++) {
+        //let playerSelection = prompt("What is your choice? Rock, Paper or Scissors?", "")
+        let playerSelection = "Rock";
+        const computerSelection = getComputerChoice();
+
+        console.log(`You played ${playerSelection} vs ${computerSelection}. ${playRound(playerSelection, computerSelection)}`);
+
+     }
+
+    console.log(`Your final score is ${playerScore} and the computer score is ${computerScore}`)
+
+    // Resultado final de la partida
+    let finalResult = 
+    (playerScore > computerScore) ? console.log("You are the winner of the game")
+    : (playerScore < computerScore) ? console.log("You lose the game against the computer")
+    : console.log("Nor you or the computer won. Try again");
+};
+
+game();
