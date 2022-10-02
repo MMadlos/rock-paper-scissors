@@ -21,39 +21,44 @@ function game() {
         button.addEventListener("click", () => {
             const playerSelection = button.textContent;
             let computerSelection = getComputerChoice();
-            console.log(playerSelection);   
+            
             
             playRound(playerSelection, computerSelection);
         })        
     })
 
-    function playRound(playerChoice, computerSelection) {
-        
-        if (playerChoice == "Rock" && computerSelection == "Scissors"){
-            div.textContent = `You have selected ${playerChoice} against ${computerSelection}. YOU WON!!`
-            body.appendChild(div);
-        } else if (playerChoice == "Paper" && computerSelection == "Rock"){
-            div.textContent = `You have selected ${playerChoice} against ${computerSelection}. YOU WON!!`
-            body.appendChild(div);
-        } else if (playerChoice == "Scissors" && computerSelection == "Paper"){
-            div.textContent = `You have selected ${playerChoice} against ${computerSelection}. YOU WON!!`
-            body.appendChild(div);
-        } else if (playerChoice == computerSelection) {
-            div.textContent = `You have selected ${playerChoice} against ${computerSelection}. TIE!!`
-            body.appendChild(div);        
-        }            
-        else {
-            div.textContent = `You have selected ${playerChoice} against ${computerSelection} YOU LOSE! `;
-            body.appendChild(div);
-        } 
-    };
+    // Playround
 
-    
+    function playRound(playerSelection, computerSelection){
+                
+        let playerWin = [
+            {playerChoice: "Rock", computerSelection: "Scissors"},
+            {playerChoice: "Paper",computerSelection: "Rock"},
+            {playerChoice: "Scissors",computerSelection: "Paper"}
+        ]
+
+        const optionMessage = `You have selected ${playerSelection} against ${computerSelection}.`
+        const winMessage = `YOU WON!!`;
+        const tieMessage = `TIE!!`;
+        const loseMessage = `YOU LOSE!`;
+
+        for (i = 0; i < playerWin.length; i++){
+            if (playerWin[i].playerChoice == playerSelection && playerWin[i].computerSelection == computerSelection) {
+                div.textContent = optionMessage + winMessage;
+                return body.appendChild(div);
+
+            } else if (playerSelection == computerSelection){
+                div.textContent = optionMessage + tieMessage;
+                return body.appendChild(div);
+            }
+            div.textContent = optionMessage + loseMessage;
+            return body.appendChild(div);
+        }
+    }    
 }
-
-
 
 // Indica resultado de la partida
 
 
 game();
+
