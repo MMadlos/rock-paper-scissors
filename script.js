@@ -52,8 +52,8 @@ function addRoundCounter() {
         roundCounter++;
         roundNumber.textContent = roundCounter;            
         console.log(roundCounter);
-    } else {
-    console.log("Ha superado las 5 partidas");
+    } else {        
+        getWinnerGame();
     }
 }
 
@@ -77,16 +77,14 @@ function addScores(){
     }
 }
 
-// Add winner of 5
-// Cuando el contador de rondas llegue a 5
-if(roundCounter == 5){}
-// Evalúa quién tiene más puntos
-if(playerScore > computerScore){
-    console.log("You WIN!")
-} else if (playerScore < computerScore) {
-    console.log("You lose...");
-} else {
-    console.log("Tie")
-}
+function getWinnerGame(){
+    if(playerScore > computerScore){
+        console.log("You WIN!")
+    } else if (playerScore < computerScore) {
+        console.log("You lose...");
+    } else {
+        console.log("Tie")
+    }
 
-// Si no llega a 5, permite seguir jugando
+    window.addEventListener('click',()=>{ location.reload()})
+}

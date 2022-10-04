@@ -1,0 +1,8 @@
+#results {
+    display: flex;
+    gap: 80px;
+}
+
+/* #results > * {
+    border: 1px solid red;
+} */
