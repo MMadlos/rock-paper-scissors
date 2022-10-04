@@ -17,7 +17,13 @@ function game() {
             let roundNumber = document.getElementById("roundNumber");
             let roundCounter = Number(roundNumber.textContent);
 
+            let message = document.getElementById("message");
+            message.textContent = `You played ${playerSelection} against ${computerSelection}. ${result}`;
+
+
+
             if(roundCounter == 5){
+                getWinnerGame()
                 toggleOptionBtns()
                 toggleResetBtn()    
             }            
@@ -42,6 +48,7 @@ function playRound(playerSelection, computerSelection) {
 
     for(i = 0; i < conditionsToWin.length; i++){  
         if (conditionsToWin[i].player == playerSelection && conditionsToWin[i].computer == computerSelection) {
+            
             return result = "win";
 
         } else if (playerSelection == computerSelection){
@@ -73,28 +80,36 @@ function addScores(){
     let computerNumber = document.getElementById("computerNumber");
     
     let playerScore = Number(playerNumber.textContent);
-    let computerScore = Number(computerNumber.textContent);
+    let computerScore = Number(computerNumber.textContent);  
+    
+    let message = document.getElementById("message");
 
-    if(result == "win"){
+    if(result == "win") {
         playerScore++
-        playerNumber.textContent = playerScore;
-        console.log("win")
+        playerNumber.textContent = playerScore;       
+        return result = "You won this round!";
+
+
     } else if (result == "lose"){
         computerScore++
         computerNumber.textContent = computerScore;
-        console.log("lose")
+        return result = "You lost this round...";
+
     } else {
-        console.log("tie")
+        return result = "It's a tie.";
+
     }
 }
 
 function getWinnerGame(){
+    let message = document.getElementById("message");
+    
     if(playerScore > computerScore){
-        console.log("You WIN!")
+        message.textContent = `YOU WON THE GAME!`
     } else if (playerScore < computerScore) {
-        console.log("You lose...");
+        message.textContent = `YOU LOST THE GAME :( TRY AGAIN!`
     } else {
-        console.log("Tie")
+        message.textContent = `IT'S TIE`
     }
 
     
@@ -111,6 +126,7 @@ function restartGame(){
         roundNumber.textContent = 0;
         playerNumber.textContent = 0;
         computerNumber.textContent = 0;
+        message.textContent = "";
         toggleResetBtn()      
         toggleOptionBtns()
 
