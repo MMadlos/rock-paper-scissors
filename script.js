@@ -8,44 +8,52 @@ function getComputerSelection() {
 function getHumanChoice() {
   const options = document.querySelector("#options");
   const buttons = options.querySelectorAll("button");
-  let humanChoice;
 
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      humanChoice = button.textContent;
-      console.log(humanChoice);
-      return humanChoice;
+      console.log(button.textContent);
+      return button.textContent;
     });
   });
 }
 
 function game() {
-  const computerChoice = getComputerSelection();
-
-  //   const result = playRound(getHumanChoice(), computerChoice);
-
   const options = document.querySelector("#options");
   const buttons = options.querySelectorAll("button");
 
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      let playerSelection = button.textContent;
-      let computerSelection = getComputerSelection();
+      const playerChoice = button.textContent;
+      const computerChoice = getComputerSelection();
 
-      playRound(playerSelection, computerSelection);
-      addScores();
+      const result = playRound(playerChoice, computerChoice);
+      addScores(result);
+      const resultMessage = getResultMessage(result);
+      showRoundMessage(playerChoice, computerChoice, resultMessage);
       addRoundCounter();
 
-      let roundNumber = document.getElementById("roundNumber");
-      let roundCounter = Number(roundNumber.textContent);
+      const maxRounds = 5;
+      let $roundNumber = document.getElementById("roundNumber");
+      let roundCounter = Number($roundNumber.textContent);
+      if (roundCounter === maxRounds) {
+        // Falta añadir playerScore y computerScore
+        let $playerNumber = document.getElementById("playerNumber");
+        let $computerNumber = document.getElementById("computerNumber");
 
-      let message = document.getElementById("message");
-      message.textContent = `You played ${playerSelection} against ${computerSelection}. ${result}`;
+        let playerScore = Number($playerNumber.textContent);
+        let computerScore = Number($computerNumber.textContent);
 
-      if (roundCounter == 5) {
-        getWinnerGame();
-        toggleOptionBtns();
+        const message = document.getElementById("message");
+        if (playerScore > computerScore) {
+          message.textContent = `YOU WON THE GAME!`;
+        } else if (playerScore < computerScore) {
+          message.textContent = `YOU LOST THE GAME :( TRY AGAIN!`;
+        } else {
+          message.textContent = `THE MATCH IS TIE`;
+        }
+
         toggleResetBtn();
+        toggleOptionBtns();
       }
     });
   });
@@ -63,11 +71,11 @@ function playRound(playerSelection, computerSelection) {
   const playerWins = conditionsToWin[playerSelection] === computerSelection;
 
   if (playerSelection === computerSelection) {
-    return (result = "Tie");
+    return "Tie";
   } else if (playerWins) {
-    return (result = "Win");
+    return "Win";
   } else {
-    return (result = "Lose");
+    return "Lose";
   }
 }
 
@@ -75,34 +83,40 @@ function addRoundCounter() {
   let roundNumber = document.getElementById("roundNumber");
   let roundCounter = Number(roundNumber.textContent);
 
-  if (roundCounter < 5) {
-    roundCounter++;
-    roundNumber.textContent = roundCounter;
-  } else {
-    getWinnerGame();
-  }
+  roundCounter++;
+  roundNumber.textContent = roundCounter;
 }
 
-function addScores() {
+function addScores(result) {
   let playerNumber = document.getElementById("playerNumber");
   let computerNumber = document.getElementById("computerNumber");
 
   let playerScore = Number(playerNumber.textContent);
   let computerScore = Number(computerNumber.textContent);
 
-  let message = document.getElementById("message");
-
-  if (result == "win") {
+  if (result === "Win") {
     playerScore++;
     playerNumber.textContent = playerScore;
-    return (result = "You won this round!");
-  } else if (result == "lose") {
+  } else if (result === "Lose") {
     computerScore++;
     computerNumber.textContent = computerScore;
-    return (result = "You lost this round...");
   } else {
-    return (result = "It's a tie.");
+    return;
   }
+}
+
+function getResultMessage(result) {
+  const resultMessage = {
+    Win: "You won this round!",
+    Lose: "You lost this round",
+    Tie: "It's a tie",
+  };
+  return resultMessage[result];
+}
+
+function showRoundMessage(playerChoice, computerChoice, resultMessage) {
+  const message = document.getElementById("message");
+  message.textContent = `You played ${playerChoice} against ${computerChoice}. ${resultMessage}`;
 }
 
 function getWinnerGame() {
