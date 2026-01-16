@@ -1,6 +1,29 @@
-game();
+function getComputerSelection() {
+  let options = ["Rock", "Paper", "Scissors"];
+  const randomOption = Math.floor(Math.random() * options.length);
+
+  return options[randomOption];
+}
+
+function getHumanChoice() {
+  const options = document.querySelector("#options");
+  const buttons = options.querySelectorAll("button");
+  let humanChoice;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      humanChoice = button.textContent;
+      console.log(humanChoice);
+      return humanChoice;
+    });
+  });
+}
 
 function game() {
+  const computerChoice = getComputerSelection();
+
+  //   const result = playRound(getHumanChoice(), computerChoice);
+
   const options = document.querySelector("#options");
   const buttons = options.querySelectorAll("button");
 
@@ -28,46 +51,23 @@ function game() {
   });
 }
 
-function getComputerSelection() {
-  let options = ["Rock", "Paper", "Scissors"];
-  const computerChoice = Math.floor(Math.random() * options.length);
-  return computerChoice;
-}
-
-function getHumanChoice() {
-  const options = document.querySelector("#options");
-  const buttons = options.querySelectorAll("button");
-  let humanChoice;
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      humanChoice = button.textContent;
-      console.log(humanChoice);
-      return humanChoice;
-    });
-  });
-}
-
-getHumanChoice();
+game();
 
 function playRound(playerSelection, computerSelection) {
-  let conditionsToWin = [
-    { player: "Rock", computer: "Scissors" },
-    { player: "Paper", computer: "Rock" },
-    { player: "Scissors", computer: "Paper" },
-  ];
+  const conditionsToWin = {
+    Rock: "Scissors",
+    Paper: "Rock",
+    Scissors: "Paper",
+  };
 
-  for (i = 0; i < conditionsToWin.length; i++) {
-    if (
-      conditionsToWin[i].player == playerSelection &&
-      conditionsToWin[i].computer == computerSelection
-    ) {
-      return (result = "win");
-    } else if (playerSelection == computerSelection) {
-      return (result = "tie");
-    } else {
-      return (result = "lose");
-    }
+  const playerWins = conditionsToWin[playerSelection] === computerSelection;
+
+  if (playerSelection === computerSelection) {
+    return (result = "Tie");
+  } else if (playerWins) {
+    return (result = "Win");
+  } else {
+    return (result = "Lose");
   }
 }
 
