@@ -5,18 +5,6 @@ function getComputerSelection() {
   return options[randomOption];
 }
 
-function getHumanChoice() {
-  const options = document.querySelector("#options");
-  const buttons = options.querySelectorAll("button");
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      console.log(button.textContent);
-      return button.textContent;
-    });
-  });
-}
-
 function game() {
   const options = document.querySelector("#options");
   const buttons = options.querySelectorAll("button");
