@@ -34,6 +34,22 @@ function getComputerSelection() {
   return computerChoice;
 }
 
+function getHumanChoice() {
+  const options = document.querySelector("#options");
+  const buttons = options.querySelectorAll("button");
+  let humanChoice;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      humanChoice = button.textContent;
+      console.log(humanChoice);
+      return humanChoice;
+    });
+  });
+}
+
+getHumanChoice();
+
 function playRound(playerSelection, computerSelection) {
   let conditionsToWin = [
     { player: "Rock", computer: "Scissors" },
