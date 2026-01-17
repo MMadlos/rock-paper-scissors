@@ -31,40 +31,6 @@ function getEndGameMessage(winner) {
   return endGameMessage[winner];
 }
 
-function game() {
-  const options = document.querySelector("#options");
-  const buttons = options.querySelectorAll("button");
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const playerChoice = button.textContent;
-      const computerChoice = getComputerSelection();
-
-      const roundResult = playRound(playerChoice, computerChoice);
-      addScores(roundResult);
-      const resultMessage = getResultMessage(roundResult);
-      showRoundMessage(playerChoice, computerChoice, resultMessage);
-      addRoundCounter();
-
-      const maxRounds = 5;
-      let $roundNumber = document.getElementById("roundNumber");
-      let roundCounter = Number($roundNumber.textContent);
-      if (roundCounter === maxRounds) {
-        const gameWinner = checkGameWinner();
-        const endGameMessage = getEndGameMessage(gameWinner);
-
-        const $message = document.getElementById("message");
-        $message.textContent = endGameMessage;
-
-        toggleResetBtn();
-        toggleOptionBtns();
-      }
-    });
-  });
-}
-
-game();
-
 function playRound(playerSelection, computerSelection) {
   const conditionsToWin = {
     Rock: "Scissors",
@@ -123,27 +89,90 @@ function showRoundMessage(playerChoice, computerChoice, resultMessage) {
   message.textContent = `You played ${playerChoice} against ${computerChoice}. ${resultMessage}`;
 }
 
-function restartGame() {
+function game() {
+  const options = document.querySelector("#options");
+  const buttons = options.querySelectorAll("button");
+
+  console.log("Fuera de buttons");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log("Antes de variables");
+      const playerChoice = button.textContent;
+      const computerChoice = getComputerSelection();
+
+      const roundResult = playRound(playerChoice, computerChoice);
+      addScores(roundResult);
+      const resultMessage = getResultMessage(roundResult);
+      showRoundMessage(playerChoice, computerChoice, resultMessage);
+      addRoundCounter();
+
+      const maxRounds = 5;
+      let $roundNumber = document.getElementById("roundNumber");
+      let roundCounter = Number($roundNumber.textContent);
+      if (roundCounter === maxRounds) {
+        // Get and display winner message
+        const gameWinner = checkGameWinner();
+        const endGameMessage = getEndGameMessage(gameWinner);
+        const $message = document.getElementById("message");
+        $message.textContent = endGameMessage;
+
+        // add option buttons;
+        const options = document.querySelector("#options");
+        const optionButtons = options.querySelectorAll("button");
+
+        optionButtons.forEach((button) => {
+          button.setAttribute("disabled", "true");
+        });
+
+        // toggleResetBtn();
+        const reset = document.querySelector("#reset");
+        reset.removeAttribute("disabled");
+
+        // Click btn reset
+        reset.addEventListener("click", () => {
+          optionButtons.forEach((button) => {
+            button.removeAttribute("disabled");
+          });
+
+          reset.setAttribute("disabled", "true");
+          resetBoardScores();
+        });
+      }
+    });
+  });
+}
+
+game();
+
+function resetGame() {
+  toggleResetBtn();
+  toggleOptionBtns();
+
+  const btnReset = document.querySelector("#reset");
+  btnReset.addEventListener("click", () => {
+    resetBoardScores();
+    toggleOptionBtns();
+    // toggleResetBtn();
+  });
+}
+
+function resetBoardScores() {
   let roundNumber = document.querySelector("#roundNumber");
   let playerNumber = document.querySelector("#playerNumber");
   let computerNumber = document.querySelector("#computerNumber");
 
-  const btnReset = document.querySelector("#reset");
-
-  btnReset.addEventListener("click", () => {
-    roundNumber.textContent = 0;
-    playerNumber.textContent = 0;
-    computerNumber.textContent = 0;
-    message.textContent = "";
-    toggleResetBtn();
-    toggleOptionBtns();
-  });
+  roundNumber.textContent = 0;
+  playerNumber.textContent = 0;
+  computerNumber.textContent = 0;
+  message.textContent = "";
 }
 
 function toggleResetBtn() {
   const reset = document.querySelector("#reset");
   reset.toggleAttribute("disabled");
-  restartGame();
+  console.log(reset);
+  return;
 }
 
 function toggleOptionBtns() {
