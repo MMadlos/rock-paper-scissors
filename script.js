@@ -107,6 +107,7 @@ function game() {
       const maxRounds = 5;
       let $roundNumber = document.getElementById("roundNumber");
       let roundCounter = Number($roundNumber.textContent);
+      console.log(roundCounter);
       if (roundCounter === maxRounds) {
         // Get and display winner message
         const gameWinner = checkGameWinner();
@@ -115,6 +116,7 @@ function game() {
         $message.textContent = endGameMessage;
 
         // add option buttons;
+        // toggleOptionBtns("End");
         const options = document.querySelector("#options");
         const optionButtons = options.querySelectorAll("button");
 
@@ -127,20 +129,32 @@ function game() {
         reset.removeAttribute("disabled");
 
         // Click btn reset
-        reset.addEventListener("click", () => {
-          optionButtons.forEach((button) => {
-            button.removeAttribute("disabled");
-          });
+        console.log("Aquí NO está el problema");
 
-          reset.setAttribute("disabled", "true");
-          resetBoardScores();
-        });
+        reset.addEventListener(
+          "click",
+          () => {
+            console.log("Aquí está el problema");
+
+            optionButtons.forEach((button) => {
+              button.removeAttribute("disabled");
+            });
+            // toggleOptionBtns("Start");
+            reset.setAttribute("disabled", "true");
+            resetBoardScores();
+          },
+          { once: true }
+        );
       }
     });
   });
 }
 
 game();
+
+function toggleButtons(gameState) {
+  toggleOptionBtns(gameState);
+}
 
 function resetGame() {
   toggleResetBtn();
@@ -172,11 +186,15 @@ function toggleResetBtn() {
   return;
 }
 
-function toggleOptionBtns() {
+function toggleOptionBtns(gameState) {
   const options = document.querySelector("#options");
   const optionButtons = options.querySelectorAll("button");
 
   optionButtons.forEach((button) => {
-    button.toggleAttribute("disabled");
+    const isEndGame = gameState === "End";
+
+    isEndGame
+      ? button.setAttribute("disabled", "true")
+      : button.removeAttribute("disabled");
   });
 }
