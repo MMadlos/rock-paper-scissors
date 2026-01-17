@@ -93,11 +93,8 @@ function game() {
   const options = document.querySelector("#options");
   const buttons = options.querySelectorAll("button");
 
-  console.log("Fuera de buttons");
-
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      console.log("Antes de variables");
       const playerChoice = button.textContent;
       const computerChoice = getComputerSelection();
 
